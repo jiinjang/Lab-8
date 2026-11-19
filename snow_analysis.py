@@ -3,21 +3,25 @@ import pandas as pd
 
 # The first four NOAA description rows have fewer columns than the data,
 # so header=None and names=range(37) are needed to read the entire file first.
+df_2021 = pd.read_csv("2021.csv", header=None, names=range(37))
 df_2022 = pd.read_csv("2022.csv", header=None, names=range(37))
 df_2023 = pd.read_csv("2023.csv", header=None, names=range(37))
 df_2024 = pd.read_csv("2024.csv", header=None, names=range(37))
 df_2025 = pd.read_csv("2025.csv", header=None, names=range(37))
 
+df_2021 = df_2021[4:]
 df_2022 = df_2022[4:]
 df_2023 = df_2023[4:]
 df_2024 = df_2024[4:]
 df_2025 = df_2025[4:]
 
+df_2021.columns = df_2021.iloc[0]
 df_2022.columns = df_2022.iloc[0]
 df_2023.columns = df_2023.iloc[0]
 df_2024.columns = df_2024.iloc[0]
 df_2025.columns = df_2025.iloc[0]
 
+df_2021 = df_2021[1:].reset_index(drop=True)
 df_2022 = df_2022[1:].reset_index(drop=True)
 df_2023 = df_2023[1:].reset_index(drop=True)
 df_2024 = df_2024[1:].reset_index(drop=True)
@@ -36,12 +40,14 @@ day_columns = [
 
 columns_to_keep = ["Station Name", "County"] + day_columns
 
+df_2021 = df_2021[columns_to_keep].copy()
 df_2022 = df_2022[columns_to_keep].copy()
 df_2023 = df_2023[columns_to_keep].copy()
 df_2024 = df_2024[columns_to_keep].copy()
 df_2025 = df_2025[columns_to_keep].copy()
 
 dataframes = {
+    2021: df_2021,
     2022: df_2022,
     2023: df_2023,
     2024: df_2024,
